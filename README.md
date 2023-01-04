@@ -44,8 +44,8 @@ There is no currently planned way to raise this number</f4>
 Because of this, I'm asking you to report any bugs/errors that pop up. Here's the link!<br>
 https://github.com/Ames-hub/Melancholy/issues<br><br>
   Steps<br>
-  1 - Open a Issue
-  2 - Add the correct Labels
-  3 - Add a Title
+  1 - Open a Issue<br>
+  2 - Add the correct Labels<br>
+  3 - Add a Title<br>
   4 - If its a Bug/Error, please add the error that was returned to the comment.
   </reporting></div>
