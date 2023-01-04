@@ -30,4 +30,11 @@ You can raise this number by visiting the Gym or you can raise it through rare r
 <f4>Health<br>
 Health measures the punishment you can take before passing out or dying.<br>
 There is no currently planned way to raise this number</f4>
+<div align="center">
+  <h1>Getting Started</h1>
+  <gettingstarted>To get started, Simply run starter.py<br>
+  If you encounter any errors, Please delete the file game.db<br>
+  if you are still encountering problems, Please contact me on discord.<br><br>
+  FriendlyFox.exe#6385
+  </gettingstarted>
 </div>
