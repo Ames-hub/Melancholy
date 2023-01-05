@@ -1,8 +1,4 @@
-import sqlite3
-import time
-import sys
-import random
-import logging
+import sqlite3, time, sys, random, logging
 
 # Sets up logging
 logging.basicConfig(filename='logs/Starter.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
