@@ -3,6 +3,8 @@
 # Chapter 1.0 Is the story of the character's either peaceful exit or escape from the hospital
 # Both routes teach the same components, but the easier route is the peaceful route.
 
+import logging, time, sqlite3, sys, colorama, os
+
 # THE END MESSAGE INDICATING WHEN THERE IS NO MORE STORY TO BE TOLD
 def endmsg():
     time.sleep(10)
@@ -13,21 +15,7 @@ def endmsg():
     print("")
     print("Press CTRL + C to exit")
 
-import logging
-import time
-import colorama
-import sys
-import sqlite3
-
-# Sets up logging
-logging.basicConfig(filename='logs/Chapter1.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-con = sqlite3.connect('game.db')
-cur = con.cursor()
-logging.info("Connected to database")
-
-logging.info ("Chapter1.py has been loaded")
-
+# Prints a str 1 letter at a time
 def delay_print(s):
     logging.info("Function 'delay_print' has been called")
     for c in s:
@@ -36,7 +24,6 @@ def delay_print(s):
         time.sleep(0.15)
 
 # Prints a str in a certain color
-
 def print_color(text, color):
     logging.info("Function 'print_color' has been called")
     colorama.init()
@@ -51,6 +38,7 @@ def print_color(text, color):
     }
     print(colors[color] + text)
     colorama.deinit()
+
 # Prints a str and 1 word in that string as a certain color
 def print_cword(text, word, color):
     logging.info("Function 'print_cword' has been called")
@@ -66,6 +54,75 @@ def print_cword(text, word, color):
     }
     print(text.replace(word, colors[color] + word + colorama.Style.RESET_ALL))
     colorama.deinit()
+
+# Clears the console
+def clear():
+    os.system('cls' if os.name=='nt' else 'clear')
+
+# SAVES ALL STATS
+def savestat(trauma, stamina, health, con, cur):
+    cur.execute("UPDATE stats SET trauma = ?", (trauma,))
+    logging.info("Saved Trauma to DB")
+    cur.execute("UPDATE stats SET stamina = ?", (stamina,))
+    logging.info("Saved Stamina to DB")
+    cur.execute("UPDATE stats SET health = ?", (health,))
+    logging.info("Saved Health to DB")
+    con.commit()
+
+# ADDS TRAUMA
+def trauma1(trauma):
+    print("\033[91m[!] Trauma +\033[0m")
+    trauma =+ trauma + 20
+    logging.info("Trauma + 20 (trauma1)")
+    if trauma < 0:
+        trauma = 0
+        logging.info("Trauma is less than 0, setting to 0")
+def trauma2(trauma):
+    print("\033[91m[!] Trauma ++\033[0m")
+    trauma =+ trauma + 50
+    logging.info("Trauma + 50 (trauma2)")
+    if trauma < 0:
+        trauma = 0
+        logging.info("Trauma is less than 0, setting to 0")
+def trauma3(trauma):
+    print("\033[91m[!] Trauma +++\033[0m")
+    trauma =+ trauma + 100 
+    logging.info("Trauma + 100 (trauma3)")
+    if trauma < 0:
+        trauma = 0
+        logging.info("Trauma is less than 0, setting to 0")
+
+# REMOVES TRAUMA
+def trauma1r(trauma):
+    print("\033[92m[!] Trauma -\033[0m")
+    trauma =+ trauma - 20
+    logging.info("Trauma - 20 (trauma1r)")
+    if trauma < 0:
+        trauma = 0
+        logging.info("Trauma is less than 0, setting to 0")
+def trauma2r(trauma):
+    print("\033[92m[!] Trauma --\033[0m")
+    trauma =+ trauma - 50
+    logging.info("Trauma - 50 (trauma2r)")
+    if trauma < 0:
+        trauma = 0
+        logging.info("Trauma is less than 0, setting to 0")
+def trauma3r(trauma):
+    print("\033[92m[!] Trauma ---\033[0m")
+    trauma =+ trauma - 100 
+    logging.info("Trauma - 100 (trauma3r)")
+    if trauma < 0:
+        trauma = 0
+        logging.info("Trauma is less than 0, setting to 0")
+
+# Sets up logging
+logging.basicConfig(filename='logs/Chapter1.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+con = sqlite3.connect('game.db')
+cur = con.cursor()
+logging.info("Connected to database")
+
+logging.info ("Chapter1.py has been loaded")
 
 ksfjis = True
 if ksfjis == True:
@@ -95,70 +152,6 @@ if ksfjis == True:
     cur.execute("CREATE TABLE IF NOT EXISTS MetHazel (Met INT)")
     logging.info("Created table 'MetHazel'")
 # Used to shrink all this shit
-
-# ADDS TRAUMA
-# ADDS TRAUMA
-def trauma1(trauma):
-    print("\033[91m[!] Trauma +\033[0m")
-    trauma =+ trauma + 20
-    logging.info("Trauma + 20 (trauma1)")
-    if trauma < 0:
-        trauma = 0
-        logging.info("Trauma is less than 0, setting to 0")
-def trauma2(trauma):
-    print("\033[91m[!] Trauma ++\033[0m")
-    trauma =+ trauma + 50
-    logging.info("Trauma + 50 (trauma2)")
-    if trauma < 0:
-        trauma = 0
-        logging.info("Trauma is less than 0, setting to 0")
-def trauma3(trauma):
-    print("\033[91m[!] Trauma +++\033[0m")
-    trauma =+ trauma + 100 
-    logging.info("Trauma + 100 (trauma3)")
-    if trauma < 0:
-        trauma = 0
-        logging.info("Trauma is less than 0, setting to 0")
-
-# REMOVES TRAUMA
-# REMOVES TRAUMA
-def trauma1r(trauma):
-    print("\033[92m[!] Trauma -\033[0m")
-    trauma =+ trauma - 20
-    logging.info("Trauma - 20 (trauma1r)")
-    if trauma < 0:
-        trauma = 0
-        logging.info("Trauma is less than 0, setting to 0")
-def trauma2r(trauma):
-    print("\033[92m[!] Trauma --\033[0m")
-    trauma =+ trauma - 50
-    logging.info("Trauma - 50 (trauma2r)")
-    if trauma < 0:
-        trauma = 0
-        logging.info("Trauma is less than 0, setting to 0")
-def trauma3r(trauma):
-    print("\033[92m[!] Trauma ---\033[0m")
-    trauma =+ trauma - 100 
-    logging.info("Trauma - 100 (trauma3r)")
-    if trauma < 0:
-        trauma = 0
-        logging.info("Trauma is less than 0, setting to 0")
-
-# SAVES ALL STATS
-# SAVES ALL STATS
-def savestat(trauma, stamina, health, con, cur):
-    cur.execute("UPDATE stats SET trauma = ?", (trauma,))
-    logging.info("Saved Trauma to DB")
-    cur.execute("UPDATE stats SET stamina = ?", (stamina,))
-    logging.info("Saved Stamina to DB")
-    cur.execute("UPDATE stats SET health = ?", (health,))
-    logging.info("Saved Health to DB")
-    con.commit()
-
-import os
-
-def clear():
-    os.system('cls' if os.name=='nt' else 'clear')
 
 #########################################################################
 #                                                                       #
@@ -361,6 +354,9 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
             print("They must be the parents of the child you heard earlier.")
             print("These people must be on the \033[33mLeft\033[0m side of the hallway")
             input("Press enter to continue...")
+            # Breaks the operation when the user enters "left" or "right" in the string variable ACT
+            # Keeps looping using the "While" Statement until the user enters "left" or "right"
+            # This branch-off of is a result of the user entering "moniter" or "security" in the string variable ACT
 
         if "left" in act or "Left" in act:
             print("You dash down the left hallway.")
