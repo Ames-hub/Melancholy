@@ -1,6 +1,9 @@
 <div align="center">
 <h1>Melancholy!</h1>
-<p>Melancholy is a game about recovery from Trauma.<br>
+<p>Copyright Ⓒ 2023<br>
+CC BY-NC 4.0<br>
+https://creativecommons.org/licenses/by-nc/4.0/legalcode<br><br>
+Melancholy is a game about recovery from Trauma.<br>
 You will effect the world around them and help them make choices as they go about their life<br>
 Will you help them on their recovery from Trauma or will you let them fall?</p></div>
 <hr>
