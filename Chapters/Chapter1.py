@@ -10,8 +10,8 @@ def endmsg():
     time.sleep(10)
     clear()
     print("Sorry! But thats the end of Melancholy. I will continue to develop it :)")
-    print("Head over to my Github page if you want to check for updates!")
-    print("https://github.com/Ames-Hub")
+    print_cword("Head over to my Github page if you want to check for updates!", "Github page", "green")
+    print_color("https://github.com/Ames-Hub", "green")
     print("")
     print("Press CTRL + C to exit")
 
@@ -117,6 +117,10 @@ def trauma3r(trauma):
 
 # Sets up logging
 logging.basicConfig(filename='logs/Chapter1.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Sets up logging to put all errors in logs/Errors.log
+logging.basicConfig(filename='logs/error.log', filemode='w', format='%(asctime)s - %(message)s', level=logging.ERROR)
+logger = logging.getLogger()
 
 con = sqlite3.connect('game.db')
 cur = con.cursor()
@@ -557,14 +561,27 @@ def Chapter1_1(trauma, stamina, health, progress):
     endmsg()
 
 # The Def for if the player trusts the doctor
-def TrustDoc(trauma, stamina, health, progress):
+def TrustDoc(trauma, stamina, health, progress, panicked):
     print("You close your eyes and go to sleep")
     endmsg()
+    # I NEED TO ADD STORY HERE. CREATING PROBLEM TO REMIND ME
+    # A branching story based on if you panicked or not
+    if panicked == True:
+        reminder
+    if panicked == False:
+        print("reminder")
 
 # The Def for if you don't trust the Doctor
-def DontTrustDoc(trauma, stamina, health, progress):
+def DontTrustDoc(trauma, stamina, health, progress, panicked):
     print("You lay in bed and keep an eye on the door")
     endmsg()
+    # I NEED TO ADD STORY HERE. CREATING PROBLEM TO REMIND ME
+    # A branching story based on if you panicked or not
+    if panicked == True:
+        reminder
+    if panicked == False:
+        print("reminder")
+    
 
 # The end for if the user did not have the stamina to escape the Tangled up IV cord
 def IVStamCheckFail(trauma, health, stamina, progress, panicked):
@@ -727,7 +744,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
                 print("That's a nice thought.")
                 trauma1r(trauma)
                 time.sleep(5)
-                TrustDoc(trauma, health, stamina, progress)
+                TrustDoc(trauma, health, stamina, progress, panicked)
             elif "Don't" in LocklinTrustinp:
                 print("They seem untrustworthy...")
                 time.sleep(2)
@@ -736,7 +753,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
                 print("They seem too nice.")
                 trauma1(trauma)
                 time.sleep(3)
-                DontTrustDoc(trauma, stamina, health, progress)
+                DontTrustDoc(trauma, stamina, health, progress, panicked)
 
     if panicked == False:
         time.sleep(4)
@@ -744,20 +761,18 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
         time.sleep(4)
         print("'Ah, your awake!' She says as she puts down her notepad")
         time.sleep(4)
-        print("...")
-        time.sleep(3)
-        print("'You won't? Good, I'm glad to hear that.' She says")
+        print("'Now, I need to ask you a few questions, and I need you to answer them honestly.'")
         time.sleep(4)
-        print("'Now, I'm going to ask you a few questions, and I want you to answer them honestly.'")
-        time.sleep(4)
-        print("'Do you know your name?'")
+        print("'Do you know your last name?'")
         time.sleep(4)
         print("'...'")
         time.sleep(2)
-        print("'You aren't one for conversation are you?' She says with a slight smile")
+        print("'Not one for conversation are you?' She says with a slight smile")
         time.sleep(4)
         print("'Well that's alright, I'll just have to ask you some more questions.'")
         time.sleep(4)
+        print("'We can get to the other questions you didn't answer later.'")
+        time.sleep(3)
         print("'Do you know where you are?'")
         act = input("I am are in a... ")
         if "Hospital" in act or "Clinic" in act or "infirmary" in act or "ER" in act or "Emergency Room" in act:
@@ -859,7 +874,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
         time.sleep(5)
         print("'okay..' I mutter")
         time.sleep(3)
-        print("The doctor walks out, They close the door and Lock it after turning off the lights")
+        print("Hazel smiles at me and walks out, She closes the door and Lock it after turning off the lights")
         time.sleep(2)
         print("This doctor... They seem nice, Can I trust them?")
         print("Answer 1: I... Trust them")
@@ -875,7 +890,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
             print("That's a nice thought.")
             trauma1r(trauma)
             time.sleep(5)
-            TrustDoc(trauma, health, stamina, progress)
+            TrustDoc(trauma, health, stamina, progress, panicked)
         elif "Don't" in LocklinTrustinp:
             print("They seem untrustworthy...")
             time.sleep(2)
@@ -884,7 +899,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
             print("They seem so nice as well...")
             trauma1(trauma)
             time.sleep(3)
-            DontTrustDoc(trauma, stamina, health, progress)
+            DontTrustDoc(trauma, stamina, health, progress, panicked)
 
 
 
