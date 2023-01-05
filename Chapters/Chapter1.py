@@ -560,33 +560,12 @@ def Chapter1_1(trauma, stamina, health, progress):
     savestat(stamina, trauma, health)
     endmsg()
 
-# The Def for if the player trusts the doctor
-def TrustDoc(trauma, stamina, health, progress, panicked):
-    print("You close your eyes and go to sleep")
-    endmsg()
-    # I NEED TO ADD STORY HERE. CREATING PROBLEM TO REMIND ME
-    # A branching story based on if you panicked or not
-    if panicked == True:
-        reminder
-    if panicked == False:
-        print("reminder")
-
-# The Def for if you don't trust the Doctor
-def DontTrustDoc(trauma, stamina, health, progress, panicked):
-    print("You lay in bed and keep an eye on the door")
-    endmsg()
-    # I NEED TO ADD STORY HERE. CREATING PROBLEM TO REMIND ME
-    # A branching story based on if you panicked or not
-    if panicked == True:
-        reminder
-    if panicked == False:
-        print("reminder")
-    
 
 # The end for if the user did not have the stamina to escape the Tangled up IV cord
 def IVStamCheckFail(trauma, health, stamina, progress, panicked):
 
-    # REMEMBER TO ADD CODE THAT UPDATES THE TABEL THAT INDICATES THE PLAYER MET HAZEL
+    # Inserts into the DB that Hazel was met.
+    cur.execute("INSERT INTO MetHazel VALUES (?)", (int(1),))
 
     if panicked == True:
         time.sleep(4)
@@ -744,7 +723,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
                 print("That's a nice thought.")
                 trauma1r(trauma)
                 time.sleep(5)
-                TrustDoc(trauma, health, stamina, progress, panicked)
+                IVStamCheckFailMerge(trauma, health, stamina, progress, panicked)
             elif "Don't" in LocklinTrustinp:
                 print("They seem untrustworthy...")
                 time.sleep(2)
@@ -753,7 +732,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
                 print("They seem too nice.")
                 trauma1(trauma)
                 time.sleep(3)
-                DontTrustDoc(trauma, stamina, health, progress, panicked)
+                IVStamCheckFailMerge(trauma, stamina, health, progress, panicked)
 
     if panicked == False:
         time.sleep(4)
@@ -890,7 +869,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
             print("That's a nice thought.")
             trauma1r(trauma)
             time.sleep(5)
-            TrustDoc(trauma, health, stamina, progress, panicked)
+            IVStamCheckFailMerge(trauma, health, stamina, progress, panicked)
         elif "Don't" in LocklinTrustinp:
             print("They seem untrustworthy...")
             time.sleep(2)
@@ -899,9 +878,10 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
             print("They seem so nice as well...")
             trauma1(trauma)
             time.sleep(3)
-            DontTrustDoc(trauma, stamina, health, progress, panicked)
+            IVStamCheckFailMerge(trauma, stamina, health, progress, panicked)
 
-
+def IVStamCheckFailMerge(trauma, health, stamina, progress, panicked):
+    print("")
 
 # Calls the Def for Chapter1 if progress is 0
 if progress == 0:
