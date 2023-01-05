@@ -49,3 +49,8 @@ https://github.com/Ames-hub/Melancholy/issues<br><br>
   3 - Add a Title<br>
   4 - If its a Bug/Error, please add the error that was returned to the comment.
   </reporting></div>
+<div align="center">
+<h1>Pull Requests</h1>
+<pullrequests>Want to help out even further?<br>
+You can do that by making a pull request! Here's the link!<br>
+https://github.com/Ames-hub/Melancholy/pulls</pullrequests>
