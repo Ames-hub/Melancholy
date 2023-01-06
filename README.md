@@ -28,7 +28,7 @@ You will have to look at clues in the provided text and then enter what you thin
 Trauma in this case, is a number which controls how you react to certain scenario's.<br>
 Having high trauma is likely to take away control from you. You can lower your trauma through random encounters or paid services<br><br></f2>
 <f3>Stamina<br>
-Stamina measures your acrobatics and how endurant you are athletically. Having this number be high is very Very helpful.<br>
+Stamina measures your acrobatics and how endurant you are athletically. Having this number be high is very Very helpful.
 You can raise this number by visiting the Gym or you can raise it through rare random encounters. The max number is 500<br><br></f3>
 <f4>Health<br>
 Health measures the punishment you can take before passing out or dying.<br>
