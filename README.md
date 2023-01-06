@@ -22,8 +22,8 @@ The Tall man is a currently Nameless NPC who finds you and either (spoilers!) br
 <h1>Features</h1>
 <f1>Detective Work<br>
 Detective work is a tool you can use to get a more favourable outcome.<br>
-You will have to look at clues in the provided text and then enter what you think the answer is.
-[!] WARNING [!] This feature is highly experimental. Getting the wrong answer breaks the game<br><br></f1>
+You will have to look at clues in the provided text and then enter what you think the answer is.<br>
+[!] WARNING [!] This feature is highly experimental. Getting the wrong answer usually breaks the game<br><br></f1>
 <f2>Trauma<br>
 Trauma in this case, is a number which controls how you react to certain scenario's.<br>
 Having high trauma is likely to take away control from you. You can lower your trauma through random encounters or paid services<br><br></f2>
