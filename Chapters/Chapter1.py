@@ -282,9 +282,11 @@ def Chapter1(trauma, stamina, health, progress):
             print("But for now, play along.")
     # User gets the ACT wrong and they get traumatized.
     elif "Hospital" not in act or "Clinic" not in act or "infirmary" not in act or "ER" not in act or "Emergency Room" not in act:
-        time.sleep(1)
+        print("NOTICE : This section is under a re-work./nPlease do not think of this as the final product.")
+        input("Press Enter to continue")
+        time.sleep(3)
         logging.info("User failed to answer the ACT question (act1)")
-        print("'No, That can't be it...\n Where... Could this be?'")
+        print("That... somehow doesn't sound right")
         time.sleep(1)
         print("This is so confusing. Where the hell am I?! What's happening?!")
         trauma2(trauma)

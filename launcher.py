@@ -1,4 +1,5 @@
-import sqlite3, time, sys, random, logging
+import sqlite3, time, sys, random, logging, os
+from FriendlyLib import *
 
 # Sets up logging
 logging.basicConfig(filename='logs/Starter.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -29,12 +30,6 @@ trauma = 100
 # But, that could happen so I decided to add a limit.
 maxtrauma = 2000
 
-def delay_print(s):
-    for c in s:
-        sys.stdout.write(c)
-        sys.stdout.flush()
-        time.sleep(0.15)
-
 print("Press ENTER if you are not trying to debug the game")
 debugdeterminer = input("Debug Passcode... : ")
 if debugdeterminer == "CHARA":
@@ -51,29 +46,37 @@ logging.info("Connected to database")
 timenow = 6
 maximumtime = 24
 
-death_message = "You died"
 Village_name = "Maple Town"
 name = "Change me later but my name is Bob"
 
 # Defines the chapter in which you are up to
 Progress = 0
 
+# This asks the player for the settings
+# It will be changed to a GUI later
+# The settings are stored in the table "Settings" :)
+
+cur.execute('''CREATE TABLE IF NOT EXISTS Settings (Weather integer PRIMARYKEY, Temperature integer)''') # This table needs to be made before the 2 functions below are called
+
+setting("Weather", True, "This will add stuff like Rain, Snow, etc. to Free Roam", con, cur)
+
+setting("Temperature", True, "The temperature system (As of now) only affects\nopenings when you are in free roam", con, cur)
+
 # the world table contains the time, the maximum time, the default death message, the name of the village and the name of the character
 # the stats table contains the health, the maxhealth, stamina, maxstamina and money
 # the dev table contains dev options, such as debug mode
 
-cur.execute('''CREATE TABLE IF NOT EXISTS World (Time integer PRIMARYKEY, Maximum Time integer, Death Message text, Village Name text, Progress)''')
-cur.execute('''CREATE TABLE IF NOT EXISTS Stats (health integer RIMARYKEY, mingenhealth integer, maxhealth integer, stamina integer, minstamina, maxstamina integer, money integer, minmoney integer, maxgenmoney integer, trauma, maxtrauma integer)''')
+# SETTING VALUES ARE AUTO-INSERTED BY DEF
+cur.execute('''CREATE TABLE IF NOT EXISTS World (Time integer PRIMARYKEY, Maximum Time integer, Village Name text, Progress)''')
+cur.execute('''CREATE TABLE IF NOT EXISTS Stats (health integer RIMARYKEY, mingenhealth integer, maxhealth integer, stamina integer, minstamina, maxstamina integer, money integer, minmoney integer, maxgenmoney integer, trauma integer)''')
+cur.execute('''CREATE TABLE IF NOT EXISTS Stats2 (maxtrauma integer PRIMARYKEY)''') # Why? because 10 is the limit apparently. :(
 cur.execute('''CREATE TABLE IF NOT EXISTS dev (Debug integer PRIMARYKEY)''')
-cur.execute('''CREATE TABLE IF NOT EXISTS FirstVisit (Pieeresshop integer PRIMARYKEY, VanishingHospital integer, Therapist integer)''')
-cur.execute('''CREATE TABLE IF NOT EXISTS Special (PieereTherapy integer PRIMARYKEY)''')
-cur.execute("INSERT INTO World VALUES (?,?,?,?,?)", (timenow, maximumtime, death_message, Village_name, Progress))
-cur.execute("INSERT INTO Stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (health, mingenhealth, maxhealth, stamina, minstamina, maxstamina, money, minmoney, maxgenmoney, trauma, maxtrauma))
+cur.execute("INSERT INTO World VALUES (?,?,?,?)", (timenow, maximumtime, Village_name, Progress))
+cur.execute("INSERT INTO Stats2 VALUES (?)", (int(maxtrauma),))
 cur.execute("INSERT INTO dev VALUES (?)", (int(debug),))
-
-
+cur.execute("INSERT INTO Stats VALUES (?,?,?,?,?,?,?,?,?,?)", (health, mingenhealth, maxhealth, stamina, minstamina, maxstamina, money, minmoney, maxgenmoney, trauma))
 # Add a ? and a 0 for each location added. This is used to determine if the player has visited the location before. Currently 3 locations
-cur.execute("INSERT INTO FirstVisit VALUES (?, ?, ?)", (0, 0, 0))
+# I really hope there's a better solution to this, but I can't think of one right now.
 logging.info("All tables created and values inserted. Success unknown")
 logging.info("Checking...")
 # Checks if the tables have data in them.
@@ -85,15 +88,9 @@ cur.execute("SELECT * FROM Stats")
 logging.info("Stats table has data")
 cur.execute("SELECT * FROM dev")
 logging.info("Dev table has data")
-cur.execute("SELECT * FROM FirstVisit")
-logging.info("FirstVisit table has data")
-cur.execute("SELECT * FROM Special")
-logging.info("Special table has data")
 logging.info("All tables have data. Success")
-
 con.commit()
 logging.info("Committed changes to database")
-
 con.close()
 
 # runs the second script using the exec function
