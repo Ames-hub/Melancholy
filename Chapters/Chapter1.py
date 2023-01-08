@@ -200,19 +200,31 @@ def Chapter1(trauma, stamina, health, progress):
     #######################################
     # THIS IS AN EXAMPLE OF DETECTIVE WORK#
     #######################################
-    print("You wake up in a hospital bed.")
+    print("I wake up in a hospital bed.")
     time.sleep(3)
-    print("You think to yourself...")
+    print("I think to yourself...")
     time.sleep(3)
     print("What happened?")
+    time.sleep(3)
+    print("I immediately notice I can't see out of my left eye.")
+    time.sleep(2)
+    act = input("Thats.. Scary.. should I check my eye?... : ")
+    if "Yes" in act or "yes" in act or "Y" in act or "y" in act:
+        print("I touch where I think my eye is...")
+        time.sleep(2)
+        print("I feel a bandage, I feel around my head and I notice its wrapped around my head.")
+        time.sleep(4)
+        print("I look at the mirror to my left, it definitely a bandage.")
+        time.sleep(3)
+        print("What happened?")
+        time.sleep(3)
     time.sleep(4)
-    print("You look around the room.\nA cool and sterile room. The blinding sun shines through the window...")
+    print("I look around the room.\nA cool and sterile room. The blinding sun shines through the window...")
     time.sleep(3)
-    print("You look at your hands. They are covered in bandages.")
+    print("I look at your hands. They are covered in bandages.")
     time.sleep(3)
-    print("You look at the IV Drip... It's half full, Looks clean.")
+    print("I look at the IV Drip... It's half full, Looks clean.")
     time.sleep(3)
-
     print("")
     print("[!] Some ACTIONS may require detective work.\nThis is not normally complicated.")
     act = input("I think I'm in a... : ") 
@@ -282,35 +294,52 @@ def Chapter1(trauma, stamina, health, progress):
             print("But for now, play along.")
     # User gets the ACT wrong and they get traumatized.
     elif "Hospital" not in act or "Clinic" not in act or "infirmary" not in act or "ER" not in act or "Emergency Room" not in act:
-        print("NOTICE : This section is under a re-work./nPlease do not think of this as the final product.")
-        input("Press Enter to continue")
         time.sleep(3)
         logging.info("User failed to answer the ACT question (act1)")
-        print("That... somehow doesn't sound right")
+        print_cword("That... somehow doesn't sound right", "somehow doesn't sound right", "red")
         time.sleep(1)
-        print("This is so confusing. Where the hell am I?! What's happening?!")
+        print("This is so confusing... Where am I?")
+        time.sleep(2)
+        print("The sun is shining brightly, it shifts through the window and blinds you for a moment.")
+        time.sleep(3)
+        print("You look around the room, trying to remember what happened, What happened!?")
+        time.sleep(3)
+        print("Why can't I see out my right eye?!")
+        time.sleep(2)
+        print("Why are there bandages on my hands?!")
         trauma2(trauma)
         time.sleep(2)
         print("Wait... I can't remember anything, Where's my memory!? What's happening!")
         trauma1(trauma)
         time.sleep(3)
         print("I try to get out of the bed, but I am immediately pulled back.\nYou immediately notice the IV Drip, Its tangled up around the Bed frame and restraining you.")
-        time.sleep(5)
-        print("I try to pull it off, but it's too tight. I can't get it off! ")
-        trauma1(trauma)
-        time.sleep(2)
-        print("A group of people in clean white suits rushes in, They're going to kill me!")
-        time.sleep(2)
-        print("'Hold them down! They're trying to escape!'\nThey say as they push me down and")
-        s = "and..."
-        delay_print(s)
-        print("...")
-        s = 'inject.. Something...'
-        trauma1(trauma)
-        delay_print(s)
-        # Updates the Progress in World to be "FailedEsc"
-        progress = "FailedEsc"
-        cur.execute("UPDATE world SET Progress = ?", (progress,))
+        if stamina > 400:
+            print("I Struggle against the IV Drip's cable again, I can see it buckle under my persistance.")
+            time.sleep(1)
+            print("With another hard pull, It breaks apart and I'm free!")
+            # Initiates the Escape route
+            logging.info("User has initiated 'escaping the hospital! (vChapter1))'")
+            # Here will open another py file that will lead to the esc route
+            EscChapter1(trauma, health, progress, stamina)
+            #exec(open("Chapters/EscChapter1.py").read())
+            exit()
+        else:
+            time.sleep(5)
+            print("I try to pull it off, but it's too tight. I can't get it off! ")
+            trauma1(trauma)
+            time.sleep(2)
+            print("A group of people in clean white suits rushes in, Why are they here!?")
+            time.sleep(2)
+            print("'Hold them down! They're trying to escape!'\nThey say as they push me down and")
+            s = "and..."
+            delay_print(s)
+            print("...")
+            s = 'inject.. Something...'
+            trauma1(trauma)
+            delay_print(s)
+            # Updates the Progress in World to be "FailedEsc"
+            progress = "FailedEsc"
+            cur.execute("UPDATE world SET Progress = ?", (progress,))
 
 def EscChapter1(trauma, stamina, health, progress, con, cur):
     print("You dash out of the hospital door, Shoving away anyone in the way")
