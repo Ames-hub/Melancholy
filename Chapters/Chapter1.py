@@ -122,7 +122,7 @@ logging.basicConfig(filename='logs/Chapter1.log', level=logging.INFO, format='%(
 logging.basicConfig(filename='logs/error.log', filemode='w', format='%(asctime)s - %(message)s', level=logging.ERROR)
 logger = logging.getLogger()
 
-con = sqlite3.connect('game.db')
+con = sqlite3.connect('Melancholy.db')
 cur = con.cursor()
 logging.info("Connected to database")
 

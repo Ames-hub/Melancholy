@@ -4,13 +4,24 @@
 #                                                                 #
 #       This is my private def library. It contains all the       #
 #         functions that are commonly used in my programs.        #
-#            (Yes, some of them specific to melancholy)           #
+#         (Yes, some of them specific to certain programs)        #
 #                                                                 #
 #                         Copyright © 2023                        #
 #                           CC BY-NC 4.0                          #
 ###################################################################
 
 import logging, time, colorama, sys, os, sqlite3, random
+
+# Gets the name of the folder FriendlyLib.py is stored in
+parent_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+gamename = parent_path
+con = sqlite3.connect(gamename + ".db")
+cur = con.cursor()
+
+# GENERIC FUNCTIONS
+# GENERIC FUNCTIONS
+# GENERIC FUNCTIONS
 
 # Clears the console
 def clear():
@@ -45,9 +56,10 @@ def endmsg(gamename, EOL, custom_git=""):
     
     if EOL == False or EOL == "No" or EOL == "no" or EOL == "NO" or EOL == "n" or EOL == "N":
         print("Sorry! But thats the end of " + gamename + ". I Will continue to develop it :)")
+        print("Head over to my Github page if you want to check for updates!")
     else:
         print("Sorry! But that's the end of" + gamename + "\nUnfortunately, This game has reached its EOL and will no longer be updated.")
-    print("Head over to my Github page if you want to check for updates!")
+        print("If you want to see more of my work, check out my github!")
     if custom_git == "":
         print("https://github.com/Ames-Hub")
     else:
@@ -117,8 +129,41 @@ def savestat(trauma, stamina, health, con, cur):
     cur.execute("UPDATE stats SET health = ?", (health,))
     logging.info("Saved Health to DB")
     con.commit()
+    logging.info("Saved all stats to DB")
 
-# ADDS TRAUMA
+# Checks health
+def checkhealth(cur):
+    # imports health
+    cur.execute("SELECT health FROM stats")
+    health = cur.fetchone()[0]
+    cur.execute("SELECT maxhealth FROM stats")
+    maxhealth = cur.fetchone()[0]
+    cur.execute("SELECT mingenhealth FROM stats")
+    mingenhealth = cur.fetchone()[0]
+    logging.info("Health has been checked. Returned as ", health, maxhealth, mingenhealth)
+    return health, maxhealth, mingenhealth
+
+# Checks Stamina
+def checkstamina(cur):
+    # Imports stamina
+    cur.execute("SELECT stamina FROM stats")
+    stamina = cur.fetchone()[0]
+    cur.execute("SELECT maxstamina FROM stats")
+    maxstamina = cur.fetchone()[0]
+    cur.execute("SELECT minstamina FROM stats")
+    minstamina = cur.fetchone()[0]
+    logging.info("Stamina has been checked. Returned as ", stamina, maxstamina, minstamina)
+    return stamina, maxstamina, minstamina
+
+# GENERIC FUNCTIONS
+# GENERIC FUNCTIONS
+# GENERIC FUNCTIONS
+
+# Melancholy specific functions
+# Melancholy specific functions
+# Melancholy specific functions
+
+# ADDS TRAUMA - Melancholy
 def trauma1(trauma):
     print("\033[91m[!] Trauma +\033[0m")
     trauma =+ trauma + 20
@@ -141,7 +186,7 @@ def trauma3(trauma):
         trauma = 0
         logging.info("Trauma is less than 0, setting to 0")
 
-# REMOVES TRAUMA
+# REMOVES TRAUMA - Melancholy
 def trauma1r(trauma):
     print("\033[92m[!] Trauma -\033[0m")
     trauma =+ trauma - 20
@@ -164,29 +209,32 @@ def trauma3r(trauma):
         trauma = 0
         logging.info("Trauma is less than 0, setting to 0")
 
-# Checks health
-def checkhealth(cur):
-    # imports health
-    cur.execute("SELECT health FROM stats")
-    health = cur.fetchone()[0]
-    cur.execute("SELECT maxhealth FROM stats")
-    maxhealth = cur.fetchone()[0]
-    cur.execute("SELECT mingenhealth FROM stats")
-    mingenhealth = cur.fetchone()[0]
+# generates Weather
+def gen_forecast_weather(cur):
+        # Determines if the experimental_weather system is enabled
+    # Determines if the weather system is enabled
+    cur.execute("SELECT weather FROM settings")
+    experimental_weather = cur.fetchone()[0]
+    
+    if experimental_weather == True:
+        temperature = gen_forecast_temp()
+        if temperature < 0:
+            weather = "snow"
+        elif temperature < 10:
+            weather = "cloudy"
+            act = random.randint(1, 15)
+            if act > 5 or act < 8:
+                weather = "rain"
+        elif temperature > 30:
+            weather = "clear"
+        elif temperature > 35:
+            weather = "sunny"
+        return weather
+    else:
+        return "DISABLED"
 
-# Checks Stamina
-def checkstamina(cur):
-    # Imports stamina
-    cur.execute("SELECT stamina FROM stats")
-    stamina = cur.fetchone()[0]
-    cur.execute("SELECT maxstamina FROM stats")
-    maxstamina = cur.fetchone()[0]
-    cur.execute("SELECT minstamina FROM stats")
-    minstamina = cur.fetchone()[0]
-    return stamina, maxstamina, minstamina
-
-# Checks Temp
-def forecast_temp(cur):
+# Generates Temp
+def gen_forecast_temp(cur):
     '''This function determines the in-game weather'''
     logging.info('forecast def called')
 
@@ -224,30 +272,6 @@ def forecast_temp(cur):
             temperature = 48
             logging.warning("Temperature has been set to 48c to correct. This is a bug, please report it to the developer!")
         return temperature
-    else:
-        return "DISABLED"
-
-# Checks Weather
-def forecast_weather(cur):
-        # Determines if the experimental_weather system is enabled
-    # Determines if the weather system is enabled
-    cur.execute("SELECT weather FROM settings")
-    experimental_weather = cur.fetchone()[0]
-    
-    if experimental_weather == True:
-        temperature = forecast_temp()
-        if temperature < 0:
-            weather = "snow"
-        elif temperature < 10:
-            weather = "cloudy"
-            act = random.randint(1, 15)
-            if act > 5 or act < 8:
-                weather = "rain"
-        elif temperature > 30:
-            weather = "clear"
-        elif temperature > 35:
-            weather = "sunny"
-        return weather
     else:
         return "DISABLED"
 

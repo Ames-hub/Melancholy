@@ -1,3 +1,5 @@
+gamename = 'Melancholy'
+
 import sqlite3, time, sys, random, logging, os
 from FriendlyLib import *
 
@@ -39,7 +41,7 @@ else:
     debug = False
     devoptiontypes = False
 
-con = sqlite3.connect('game.db')
+con = sqlite3.connect("Melancholy.db")
 cur = con.cursor()
 logging.info("Connected to database")
 
@@ -89,9 +91,12 @@ logging.info("Stats table has data")
 cur.execute("SELECT * FROM dev")
 logging.info("Dev table has data")
 logging.info("All tables have data. Success")
-con.commit()
 logging.info("Committed changes to database")
+
+con.commit()
+time.sleep(0.5)
 con.close()
+
 
 # runs the second script using the exec function
 logging.info("Running Chapter 1")

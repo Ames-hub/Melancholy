@@ -1,33 +1,157 @@
+
+# Remember to fix the bullshit that is the weather system. Seriously, it's a mess.
+# Returns "DISABLED" or "Weather" when it shouldn't. I don't know why.
+
 import time, sqlite3, logging, random, os, sys, colorama
 
 # Imports trauma and health and stamina from the DB
 
 # The DB
-con = sqlite3.connect('game.db')
+con = sqlite3.connect('melancholy.db')
 cur = con.cursor()
 
 logging.info("Importing stats from DB")
 cur.execute("SELECT trauma FROM stats")
 trauma = cur.fetchone()[0]
 
+cur.execute("SELECT debug FROM dev")
+debug = cur.fetchone()[0]
+
+# Imports all stats from db one by one
+cur.execute("SELECT health FROM stats")
+health = cur.fetchone()[0]
+cur.execute("SELECT maxhealth FROM stats")
+maxhealth = cur.fetchone()[0]
+cur.execute("SELECT stamina FROM stats")
+stamina = cur.fetchone()[0]
+cur.execute("SELECT maxstamina FROM stats")
+maxstamina = cur.fetchone()[0]
+cur.execute("SELECT minstamina FROM stats")
+minstamina = cur.fetchone()[0]
+cur.execute("SELECT money FROM stats")
+money = cur.fetchone()[0]
+cur.execute("SELECT minmoney FROM stats")
+minmoney = cur.fetchone()[0]
+
 from FriendlyLib import *
 
 # Logging
 logging.basicConfig(filename='logs/FreeRoam.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-forecast_temp(cur)
+if debug == True:
 
-forecast_weather(cur)
+    cur.execute("SELECT Weather FROM settings")
+    experimental_weather = cur.fetchone()[0]
+
+    cur.execute("SELECT temperature FROM settings")
+    experimental_temperature = cur.fetchone()[0]
+
+    print("Debug mode is enabled")
+    print("Experimental weather:", experimental_weather)
+    print("Experimental temperature:", experimental_temperature)
+
+# Checks Weather
+def forecast_weather():
+    
+    con = sqlite3.connect('Melancholy.db')
+    cur = con.cursor()
+    
+    # Determines if the experimental_weather system is enabled
+    # Determines if the weather system is enabled
+    cur.execute("SELECT Weather FROM settings")
+    experimental_weather = cur.fetchone()[0]
+    
+    if experimental_weather == True:
+        temperature = forecast_temp()
+        if temperature < 0:
+            return "snow"
+        elif temperature < 10:
+            act = random.randint(1, 15)
+            if act > 5 or act < 8:
+                return "rain"
+            else:
+                return "cloudy"
+
+        elif temperature > 30:
+            return "clear"
+        elif temperature > 35:
+            return "sunny"
+    else:
+        return "DISABLED"
+
+# Checks Temp
+def forecast_temp():
+    
+    con = sqlite3.connect('melancholy.db')
+    cur = con.cursor()
+    
+    '''This function determines the in-game weather'''
+    logging.info('forecast def called')
+
+    # Determines if the weather system is enabled
+    cur.execute("SELECT temperature FROM settings")
+    experimental_temperature = cur.fetchone()[0]
+
+    if experimental_temperature == True:
+        act = random.randint(1, 100) + 10
+        # if the ACT is low, it'll be a cold af day.
+        if act < 25 or act == 25:
+            temperature = random.randint(-2, 10)
+            if act == 10:
+                temperature = -10
+                logging.info("Rare weather event!", temperature, "c")
+        elif act < 30 or act == 30:
+            temperature = random.randint(10, 19)
+        # If the ACT is medium, it'll be a nice day.
+        elif act > 30 and act < 75:
+            temperature = random.randint(20, 25)
+        # If the ACT is high, it'll be a hot day.
+        elif act > 75 or act == 100:
+            temperature = random.randint(26, 35)
+            act = random.randint(1, 200)
+            if act == 25:
+                temperature = random.randint(36, 48)
+                logging.info("Rare weather event!", temperature, "c")
+        # Handles the temperature if it's too high or too low
+        elif temperature < -10:
+            logging.warning("Warning! Temperature is below -10c! This is not normal!")
+            temperature = -10
+            logging.warning("Temperature has been set to -10c to correct. This is a bug, please report it to the developer!")
+        elif temperature > 48:
+            logging.warning("Warning! Temperature is above 48c! This is not normal!")
+            temperature = 48
+            logging.warning("Temperature has been set to 48c to correct. This is a bug, please report it to the developer!")
+        return temperature
+    else:
+        return "DISABLED"
 
 # Prints a random opening depending on env var's everytime its called
 def RandomOpening(trauma):
-    logging.info('RandomOpening def called')
+
+    debug = True
+
+    # Imports debug from the DB
+    con = sqlite3.connect('melancholy.db')
+    cur = con.cursor()
+    cur.execute("SELECT debug FROM dev")
+    debug = cur.fetchone()[0]
+
+    logging.info('RandomOpening def called.', 'debug = ', debug)
     act = random.randint(1, 3)
     # WEATHER RESPONSES
     # COLD WEATHER
+
+    temperature = forecast_temp()
+    weather = forecast_weather()
+
+    print("Act: ", act)
+
+    # act = 1 # Debug act
+
     if act == 1:
-        temperature = forecast_temp()
-        weather = forecast_weather()
+        if debug == True:
+            print("Debug: Temperature is", temperature, "c")
+            print("Debug: Weather is", weather)
         if temperature < 18:
             print("I walk around the city, a cool breeze flows by. Brr!")
             if weather == "snow":
@@ -138,8 +262,12 @@ def RandomOpening(trauma):
         elif abc == 3:
             print("Can a fish cry?")
     
-def FreeRoam(trauma):
+def FreeRoam():
     logging.info('FreeRoam.py started')
+    forecast_temp()
+    forecast_weather()
     RandomOpening(trauma)
+
+FreeRoam()
 
 # NOT CURRENTLY FUNCTIONAL
