@@ -19,10 +19,15 @@ if health > 200:
 if stamina > 500:
     stamina = stamina // 2
 
-# Trauma is a experimental value. Its purpose is to make the player feel more vulnerable and less powerful and make the game more challenging.
+# Trauma is a experimental value. Its purpose is to make the player feel more (or less) vulnerable and less powerful and make the game more challenging.
 # and Give the consequences of your actions more weight.
-# However, its place in the game is still being decided. It may be removed or changed. 
+# However, its place in the game is still being decided. It will likely be changed (as it already has been) 
 trauma = 100
+
+# I Originally didn't want Trauma to have a limit, but I decided for the purpose of playability, it needs a limit.
+# Otherwise, a player could end up in a situation where their trauma is So high, that it isn't practical to reduce it via normal means.
+# But, that could happen so I decided to add a limit.
+maxtrauma = 2000
 
 def delay_print(s):
     for c in s:
@@ -58,12 +63,12 @@ Progress = 0
 # the dev table contains dev options, such as debug mode
 
 cur.execute('''CREATE TABLE IF NOT EXISTS World (Time integer PRIMARYKEY, Maximum Time integer, Death Message text, Village Name text, Progress)''')
-cur.execute('''CREATE TABLE IF NOT EXISTS Stats (health integer RIMARYKEY, mingenhealth integer, maxhealth integer, stamina integer, minstamina, maxstamina integer, money integer, minmoney integer, maxgenmoney integer, trauma)''')
+cur.execute('''CREATE TABLE IF NOT EXISTS Stats (health integer RIMARYKEY, mingenhealth integer, maxhealth integer, stamina integer, minstamina, maxstamina integer, money integer, minmoney integer, maxgenmoney integer, trauma, maxtrauma integer)''')
 cur.execute('''CREATE TABLE IF NOT EXISTS dev (Debug integer PRIMARYKEY)''')
 cur.execute('''CREATE TABLE IF NOT EXISTS FirstVisit (Pieeresshop integer PRIMARYKEY, VanishingHospital integer, Therapist integer)''')
 cur.execute('''CREATE TABLE IF NOT EXISTS Special (PieereTherapy integer PRIMARYKEY)''')
 cur.execute("INSERT INTO World VALUES (?,?,?,?,?)", (timenow, maximumtime, death_message, Village_name, Progress))
-cur.execute("INSERT INTO Stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (health, mingenhealth, maxhealth, stamina, minstamina, maxstamina, money, minmoney, maxgenmoney, trauma))
+cur.execute("INSERT INTO Stats VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (health, mingenhealth, maxhealth, stamina, minstamina, maxstamina, money, minmoney, maxgenmoney, trauma, maxtrauma))
 cur.execute("INSERT INTO dev VALUES (?)", (int(debug),))
 
 
