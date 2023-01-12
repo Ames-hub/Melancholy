@@ -81,12 +81,12 @@ def endmsg(gamename, EOL, custom_git=""):
     os.quit("You need help.")
 
 # Prints a str 1 letter at a time
-def delay_print(s):
+def delay_print(s, delay=0.15):
     logging.info("Function 'delay_print' has been called")
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        time.sleep(0.15)
+        time.sleep(delay)
 
 # Prints a str in a certain color
 def print_color(text, color):
