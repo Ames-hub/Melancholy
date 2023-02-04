@@ -1,7 +1,7 @@
 gamename = 'Melancholy'
 
 import sqlite3, time, sys, random, logging, os
-from FriendlyLib import *
+from Chapters.MelancholyLib import *
 
 # Sets up logging
 logging.basicConfig(filename='logs/Starter.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -41,7 +41,8 @@ else:
     debug = False
     devoptiontypes = False
 
-con = sqlite3.connect("Melancholy.db")
+gamename = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+con = sqlite3.connect(gamename + ".db")
 cur = con.cursor()
 logging.info("Connected to database")
 
@@ -60,9 +61,9 @@ Progress = 0
 
 cur.execute('''CREATE TABLE IF NOT EXISTS Settings (Weather integer PRIMARYKEY, Temperature integer)''') # This table needs to be made before the 2 functions below are called
 
-setting("Weather", True, "This will add stuff like Rain, Snow, etc. to Free Roam", con, cur)
+Melancholy.setting("Weather", True, "This will add stuff like Rain, Snow, etc. to Free Roam", con, cur)
 
-setting("Temperature", True, "The temperature system (As of now) only affects\nopenings when you are in free roam", con, cur)
+Melancholy.setting("Temperature", True, "The temperature system (As of now) only affects\nopenings when you are in free roam", con, cur)
 
 # the world table contains the time, the maximum time, the default death message, the name of the village and the name of the character
 # the stats table contains the health, the maxhealth, stamina, maxstamina and money

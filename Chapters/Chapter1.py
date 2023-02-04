@@ -4,116 +4,7 @@
 # Both routes teach the same components, but the easier route is the peaceful route.
 
 import logging, time, sqlite3, sys, colorama, os
-
-# THE END MESSAGE INDICATING WHEN THERE IS NO MORE STORY TO BE TOLD
-def endmsg():
-    time.sleep(10)
-    clear()
-    print("Sorry! But thats the end of Melancholy. I will continue to develop it :)")
-    print_cword("Head over to my Github page if you want to check for updates!", "Github page", "green")
-    print_color("https://github.com/Ames-Hub", "green")
-    print("")
-    print("Press CTRL + C to exit")
-
-# Prints a str 1 letter at a time
-def delay_print(s):
-    logging.info("Function 'delay_print' has been called")
-    for c in s:
-        sys.stdout.write(c)
-        sys.stdout.flush()
-        time.sleep(0.15)
-
-# Prints a str in a certain color
-def print_color(text, color):
-    logging.info("Function 'print_color' has been called")
-    colorama.init()
-    colors = {
-        "red": colorama.Fore.RED,
-        "green": colorama.Fore.GREEN,
-        "yellow": colorama.Fore.YELLOW,
-        "blue": colorama.Fore.BLUE,
-        "magenta": colorama.Fore.MAGENTA,
-        "cyan": colorama.Fore.CYAN,
-        "white": colorama.Fore.WHITE,
-    }
-    print(colors[color] + text)
-    colorama.deinit()
-
-# Prints a str and 1 word in that string as a certain color
-def print_cword(text, word, color):
-    logging.info("Function 'print_cword' has been called")
-    colorama.init()
-    colors = {
-        "red": colorama.Fore.RED,
-        "green": colorama.Fore.GREEN,
-        "yellow": colorama.Fore.YELLOW,
-        "blue": colorama.Fore.BLUE,
-        "magenta": colorama.Fore.MAGENTA,
-        "cyan": colorama.Fore.CYAN,
-        "white": colorama.Fore.WHITE,
-    }
-    print(text.replace(word, colors[color] + word + colorama.Style.RESET_ALL))
-    colorama.deinit()
-
-# Clears the console
-def clear():
-    os.system('cls' if os.name=='nt' else 'clear')
-
-# SAVES ALL STATS
-def savestat(trauma, stamina, health, con, cur):
-    cur.execute("UPDATE stats SET trauma = ?", (trauma,))
-    logging.info("Saved Trauma to DB")
-    cur.execute("UPDATE stats SET stamina = ?", (stamina,))
-    logging.info("Saved Stamina to DB")
-    cur.execute("UPDATE stats SET health = ?", (health,))
-    logging.info("Saved Health to DB")
-    con.commit()
-
-# ADDS TRAUMA
-def trauma1(trauma):
-    print("\033[91m[!] Trauma +\033[0m")
-    trauma =+ trauma + 20
-    logging.info("Trauma + 20 (trauma1)")
-    if trauma < 0:
-        trauma = 0
-        logging.info("Trauma is less than 0, setting to 0")
-def trauma2(trauma):
-    print("\033[91m[!] Trauma ++\033[0m")
-    trauma =+ trauma + 50
-    logging.info("Trauma + 50 (trauma2)")
-    if trauma < 0:
-        trauma = 0
-        logging.info("Trauma is less than 0, setting to 0")
-def trauma3(trauma):
-    print("\033[91m[!] Trauma +++\033[0m")
-    trauma =+ trauma + 100 
-    logging.info("Trauma + 100 (trauma3)")
-    if trauma < 0:
-        trauma = 0
-        logging.info("Trauma is less than 0, setting to 0")
-
-# REMOVES TRAUMA
-def trauma1r(trauma):
-    print("\033[92m[!] Trauma -\033[0m")
-    trauma =+ trauma - 20
-    logging.info("Trauma - 20 (trauma1r)")
-    if trauma < 0:
-        trauma = 0
-        logging.info("Trauma is less than 0, setting to 0")
-def trauma2r(trauma):
-    print("\033[92m[!] Trauma --\033[0m")
-    trauma =+ trauma - 50
-    logging.info("Trauma - 50 (trauma2r)")
-    if trauma < 0:
-        trauma = 0
-        logging.info("Trauma is less than 0, setting to 0")
-def trauma3r(trauma):
-    print("\033[92m[!] Trauma ---\033[0m")
-    trauma =+ trauma - 100 
-    logging.info("Trauma - 100 (trauma3r)")
-    if trauma < 0:
-        trauma = 0
-        logging.info("Trauma is less than 0, setting to 0")
+from MelancholyLib import *
 
 # Sets up logging
 logging.basicConfig(filename='logs/Chapter1.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -179,7 +70,7 @@ print("")
 Continue = input("Ready? : ")
 time.sleep(1)
 if "Yes" or "yes" or "Y" or "y" in Continue:
-    clear()
+    Melancholy.clear()
     print("Great!")
     time.sleep(1)
     print("Now, let's get started!")
@@ -245,12 +136,12 @@ def Chapter1(trauma, stamina, health, progress):
             time.sleep(3)
             print("")
             print("'Wh..What's happening?? Why can't I remember anything?! What's going on?!\n I need to get out of here!'")
-            trauma1(trauma)
+            Melancholy.trauma1(trauma)
             time.sleep(3)
             print("I try to get out of the bed, but I am immediately pulled back.\nYou immediately notice the IV Drip, Its tangled up around the Bed frame and restraining you.")
             time.sleep(5)
             print("I try to pull it off, but it's too tight. I can't get it off! ")
-            trauma1(trauma)
+            Melancholy.trauma1(trauma)
             time.sleep(2)
             print("A group of people in clean white suits rushes in, They're going to kill me!")
             print("[!] Stamina check")
@@ -265,14 +156,14 @@ def Chapter1(trauma, stamina, health, progress):
                 #exec(open("Chapters/EscChapter1.py").read())
                 exit()
             elif stamina < 400:
-                print_cword("I struggle against the IV Drip cable, it doesn't budge", "it doesn't budge", "red") 
+                Melancholy.print_cword("I struggle against the IV Drip cable, it doesn't budge", "it doesn't budge", "red") 
                 time.sleep(2)
                 print("'Hold them down! They're trying to escape!'\nThey say as they push me down and")
                 s = "And..."
-                delay_print(s)
+                Melancholy.delay_print(s)
                 print("...")
                 s = 'inject.. Something...'
-                delay_print(s)
+                Melancholy.delay_print(s)
                 IVStamCheckFail(health, stamina, trauma, progress)
         elif 'ok' in act or 'Ok' in act or 'Okay' in act or 'Okay' in act or "Fine" in act or "fine" in act:
             print("Whatever, its fine... its not what matters right now")
@@ -281,7 +172,7 @@ def Chapter1(trauma, stamina, health, progress):
             time.sleep(3)
             print("I try to get out of the bed and stand up, But I'm pulled back by the IV drip. Its a bit tangled up")
             time.sleep(3)
-            print_cword("I try to untangle it, but its not possible from where I am.", "not possible from where I am.", "red")
+            Melancholy.print_cword("I try to untangle it, but its not possible from where I am.", "not possible from where I am.", "red")
             time.sleep(3)
             print("How did this even happen? IV drip's don't tangle themselves. Not that badly")
             time.sleep(5)
@@ -296,7 +187,7 @@ def Chapter1(trauma, stamina, health, progress):
     elif "Hospital" not in act or "Clinic" not in act or "infirmary" not in act or "ER" not in act or "Emergency Room" not in act:
         time.sleep(3)
         logging.info("User failed to answer the ACT question (act1)")
-        print_cword("That... somehow doesn't sound right", "somehow doesn't sound right", "red")
+        Melancholy.print_cword("That... somehow doesn't sound right", "somehow doesn't sound right", "red")
         time.sleep(1)
         print("This is so confusing... Where am I?")
         time.sleep(2)
@@ -307,10 +198,10 @@ def Chapter1(trauma, stamina, health, progress):
         print("Why can't I see out my right eye?!")
         time.sleep(2)
         print("Why are there bandages on my hands?!")
-        trauma2(trauma)
+        Melancholy.trauma2(trauma)
         time.sleep(2)
         print("Wait... I can't remember anything, Where's my memory!? What's happening!")
-        trauma1(trauma)
+        Melancholy.trauma1(trauma)
         time.sleep(3)
         print("I try to get out of the bed, but I am immediately pulled back.\nYou immediately notice the IV Drip, Its tangled up around the Bed frame and restraining you.")
         if stamina > 400:
@@ -326,17 +217,17 @@ def Chapter1(trauma, stamina, health, progress):
         else:
             time.sleep(5)
             print("I try to pull it off, but it's too tight. I can't get it off! ")
-            trauma1(trauma)
+            Melancholy.trauma1(trauma)
             time.sleep(2)
             print("A group of people in clean white suits rushes in, Why are they here!?")
             time.sleep(2)
             print("'Hold them down! They're trying to escape!'\nThey say as they push me down and")
             s = "and..."
-            delay_print(s)
+            Melancholy.delay_print(s)
             print("...")
             s = 'inject.. Something...'
-            trauma1(trauma)
-            delay_print(s)
+            Melancholy.trauma1(trauma)
+            Melancholy.delay_print(s)
             # Updates the Progress in World to be "FailedEsc"
             progress = "FailedEsc"
             cur.execute("UPDATE world SET Progress = ?", (progress,))
@@ -350,7 +241,7 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
     time.sleep(3)
     print("In a monotone voice, They say")
     time.sleep(2.5)
-    delay_print('"Attention all staff, a code amber has been declared for 112."')
+    Melancholy.delay_print('"Attention all staff, a code amber has been declared for 112."')
     time.sleep(2)
     x = False
     while x == False:
@@ -380,7 +271,7 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
             print("You see 1 of them scanning through the CCTV footage, They seem to be looking for you.")
             time.sleep(5)
             print("You look around you, You see a CCTV Camera on the ceiling. Its not looking at you now, but it definitely saw you before")
-            trauma1(trauma)
+            Melancholy.trauma1(trauma)
             print("These people must be on the \033[33mRight\033[0m side of the hallway")
             time.sleep(5)
             print("You see 2 adults on panel 2. They are talking to each other, You can't make out what they're saying.")
@@ -402,11 +293,11 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
             print("You turn around to see a tall, strong man dressed in casual clothing.")
             time.sleep(3)
             print("They get down on their knee to look you in the eye and say")
-            delay_print("'Woah champ, slow down! You're going to hurt yourself!'")
+            Melancholy.delay_print("'Woah champ, slow down! You're going to hurt yourself!'")
             time.sleep(3)
             if trauma > 300:
                 # Prints in red "You look at the man, stunned with fear"
-                print_color("You look at the man, stunned with fear", "red")
+                Melancholy.print_color("You look at the man, stunned with fear", "red")
                 print("")
                 print("[!] Trauma")
                 print("having too high trauma takes control from you in certain situations")
@@ -418,20 +309,20 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
                 time.sleep(2)
                 print("'Now now, Everything is going to be alright' The tall man says")
                 time.sleep(2)
-                trauma3r(trauma)
-                print_cword("Their voice is oddly calming", "calming", "blue")
+                Melancholy.trauma3r(trauma)
+                Melancholy.print_cword("Their voice is oddly calming", "calming", "blue")
                 time.sleep(3)
-                print_cword("You must be why they called a amber alert", "amber alert", "yellow")
+                Melancholy.print_cword("You must be why they called a amber alert", "amber alert", "yellow")
                 time.sleep(3)
                 print("Do not worry, I do not know why you chose to ran. but I will not let them harm you.")
                 time.sleep(5)
-                trauma2r(trauma)
+                Melancholy.trauma2r(trauma)
                 # Create's a new table called "TallStrongProt"
                 cur.execute('''CREATE TABLE IF NOT EXISTS TallStrongProt (TSP integer PRIMARYKEY)''')
                 TSP = 1
                 cur.execute("INSERT INTO TallStrongProt VALUES (?)", (int(TSP),))
                 con.commit
-                savestat(stamina, trauma, health)
+                Melancholy.savestat(stamina, trauma, health)
                 print("'The exit is down here' The man says, pointing down the hallway")
                 time.sleep(5)
                 print("You give them a hug")
@@ -444,7 +335,7 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
                 time.sleep(2)
                 print("I hope they didn't...")
                 time.sleep(3)
-                print_cword("'Ah. So your why they declared a code amber", "code amber", "yellow")
+                Melancholy.print_cword("'Ah. So your why they declared a code amber", "code amber", "yellow")
                 time.sleep(3)
                 print("'disregarding running in the hallway, You should especially not run from doctors!'")
                 time.sleep(3)
@@ -468,7 +359,7 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
                         #cur.execute('''CREATE TABLE IF NOT EXISTS Chapt1End (End text PRIMARYKEY)''')
                         #ending = "Escaped hospital! (Right hall)"
                         #cur.execute("INSERT INTO Chapt1End VALUES (?)", (str(ending),))
-                        savestat(stamina, trauma, health)
+                        Melancholy.savestat(stamina, trauma, health)
                         Chapter1_1(health, trauma, stamina, progress)
                         #exec(open("Chapters/Chapter2.py").read())
                     else:
@@ -485,9 +376,9 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
                         time.sleep(3)
                         print("You pass several people on the way there.")
                         time.sleep(3)
-                        print_cword("You feel a sudden wave of Exhaustion...", "Exhaustion", "blue")
-                        delay_print("You fall asleep...")
-                        savestat(stamina, trauma, health)
+                        Melancholy.print_cword("You feel a sudden wave of Exhaustion...", "Exhaustion", "blue")
+                        Melancholy.delay_print("You fall asleep...")
+                        Melancholy.savestat(stamina, trauma, health)
                         IVStamCheckFail(trauma, health, stamina, progress, panicked=True)
                 elif "Follow" in act or "follow" in act or "Stay calm" in act or "stay calm" in act:
                     logging.info("Decided to Fail Escape Route")
@@ -503,9 +394,9 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
                     time.sleep(3)
                     print("You pass several people on the way there.")
                     time.sleep(3)
-                    print_cword("You feel a sudden wave of Exhaustion...", "Exhaustion", "blue")
-                    delay_print("You fall asleep...")
-                    savestat(stamina, trauma, health)
+                    Melancholy.print_cword("You feel a sudden wave of Exhaustion...", "Exhaustion", "blue")
+                    Melancholy.delay_print("You fall asleep...")
+                    Melancholy.savestat(stamina, trauma, health)
                     IVStamCheckFail(trauma, health, stamina, progress, panicked=True)
         # THIS IS CORRECTLY INDENDTED DONT FUCKING CHANGE IT
         # This is the path where the player encounter's guards when turning right
@@ -513,7 +404,7 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
             print("I run to the right hallway.")
             time.sleep(5)
             print("I turn the corner and see 4 guards walking my way, They haven't seen me yet! What do I do?!")
-            trauma1(trauma)
+            Melancholy.trauma1(trauma)
             time.sleep(3)
             print("")
             print("[!] Detective work is possible here, but not required")
@@ -522,10 +413,10 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
             print("Ok calm down, Think...")
             time.sleep(2)
             print("There's a cleaning closet to my right, I could hide in there!")
-            print_cword("Option: Hide", "Hide", "blue")
+            Melancholy.print_cword("Option: Hide", "Hide", "blue")
             time.sleep(4)
             print("Or I could run down the hallway past the guards and try to escape!")
-            print_cword("Option: Run", "Run", "Red")
+            Melancholy.print_cword("Option: Run", "Run", "Red")
             time.sleep(3)
             act = input("I... ")
             if "Hide" in act or "hide" in act:
@@ -534,12 +425,12 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
                 print("I slowly close it to keep quiet and I wait for the security to pass")
                 time.sleep(2)
                 print("I hear footsteps getting closer and closer")
-                trauma1(trauma)
+                Melancholy.trauma1(trauma)
             elif "Run" in act or "run" in act:
                 print("I run down the hallway as fast as I can!")
                 time.sleep(2.5)
                 print("The security guards look at me running past them, A couple try to grab me but I barely move out of the way")
-                trauma1(trauma)
+                Melancholy.trauma1(trauma)
                 time.sleep(2.5)
                 print("2 of the guard's yell 'HALT!' and start running towards me while the other 2 run around the corner")
                 time.sleep(2.5)
@@ -548,23 +439,23 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
                 print("One of the guard's stumble, They fall down and hit their head, Dazing them")
                 time.sleep(2.5)
                 print("The other one however, They are gaining on me!")
-                trauma1(trauma)
+                Melancholy.trauma1(trauma)
                 time.sleep(2.5)
-                print_cword("I run as fast as I can, but they catch me", "but they catch me", "red")
+                Melancholy.print_cword("I run as fast as I can, but they catch me", "but they catch me", "red")
                 time.sleep(2.5)
                 print("They grab me from behind and pull me up by my arms until my feet don't touch the floor")
                 time.sleep(3.5)
                 print("[!] Stamina check")
                 if stamina > 440:
                     print("with all my strength, I raise my legs up to their face and kick them")
-                    print_color("Stamina -", "red")
+                    Melancholy.print_color("Stamina -", "red")
                     stamina =- 20
-                    savestat(stamina, trauma, health)
+                    Melancholy.savestat(stamina, trauma, health)
                     print("They stumble and I run towards the exit, I open the door and dash out")
                     time.sleep(5)
                     print("I kept running for what felt like days")
                     time.sleep(3)
-                    delay_print("I eventually... passed... out...")
+                    Melancholy.delay_print("I eventually... passed... out...")
                     logging.info("Chapter 1.0 Completed. Running 1.1")
                     Chapter1_1(health, trauma, stamina, progress)
                 else:
@@ -582,14 +473,14 @@ def EscChapter1(trauma, stamina, health, progress, con, cur):
                     time.sleep(2.5)
                     print("You feel a sudden wave of exhaustion...")
                     time.sleep(2.5)
-                    delay_print("You fall asleep...")
+                    Melancholy.delay_print("You fall asleep...")
                     logging.info("User sent to IVStamCheckFail")
                     IVStamCheckFail(stamina, health, trauma, progress)
 
 def Chapter1_1(trauma, stamina, health, progress):
     print("wow")
-    savestat(stamina, trauma, health)
-    endmsg()
+    Melancholy.savestat(stamina, trauma, health)
+    Melancholy.endmsg()
 
 
 # The end for if the user did not have the stamina to escape the Tangled up IV cord
@@ -600,12 +491,12 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
 
     if panicked == True:
         time.sleep(4)
-        clear()
-        savestat(stamina, trauma, health, con, cur)
-        delay_print("You wake up... You feel tired and dazed")
+        Melancholy.clear()
+        Melancholy.savestat(stamina, trauma, health, con, cur)
+        Melancholy.delay_print("You wake up... You feel tired and dazed")
         time.sleep(3)
         print("...")
-        delay_print("A Doctor stands next to you.. Is that who that was?")
+        Melancholy.delay_print("A Doctor stands next to you.. Is that who that was?")
         time.sleep(2)
         print("...")
         print("It must have been...")
@@ -620,7 +511,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
         print("Will you reply assuring you wont (A: Wont)\nor will you say you will run off (A: will)")
         act = input("I... ")
         if "Wont" in act or "wont" in act or "won't" in act or "Won't" in act or "will" in act or "Will" in act:
-            delay_print("I shake my head")
+            Melancholy.delay_print("I shake my head")
             if "will" in act or "Will" in act:
                 print("No... I won't do that again")
             print("...")
@@ -658,14 +549,21 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
                     time.sleep(2)
             else:
                 time.sleep(2)
-                print("You think back to when you woke up... you didn't know where you were.")
+                Melancholy.print_cword("You think back to when you woke up... you didn't know where you were. [Trauma]", "[Trauma]", "red")
                 time.sleep(3)
-                print("You shake your head and look at them with a slight frown")
-                time.sleep(4)
-                print("'Oh, I see..' She says as she writes down your answer, returning a slight frown")
-                time.sleep(4)
-                print("'Well, your in a Hospital'")
-                time.sleep(2)
+                act = input("Do you answer honestly? (A: Yes) or (A: No) : ")
+                if "Yes" in act or "Y" in act:
+                    print("You nod your head and smile")
+                    time.sleep(4)
+                    print("'Yes, you are in a Hospital!' She says as she writes down your answer")
+                    time.sleep(4)
+                if "No" in act or "N" in act:
+                    print("You shake your head and look at them with a slight frown")
+                    time.sleep(4)
+                    print("'Oh, I see..' She says as she writes down your answer, returning a slight frown")
+                    time.sleep(4)
+                    print("'Well, your in a Hospital'")
+                    time.sleep(2)
             print("'Now, Do you know what happened to you?'")
             time.sleep(3)
             print("'Or rather, what happened to make you need to come here?'")
@@ -679,13 +577,13 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
             print("'Well, that's alright. We can determine it with the help of modern technology.' She says")
             time.sleep(4)
             print("'Your Injuries were quite extensive.'")
-            trauma1(trauma)
+            Melancholy.trauma1(trauma)
             time.sleep(2)
             print("'Now now, Don't worry about that. You're safe now. I wont let anyone hurt you.'")
             time.sleep(4)
             print("Their voice is soothing, You feel better.")
             time.sleep(1)
-            trauma3r(trauma)
+            Melancholy.trauma3r(trauma)
             print("")
             print("[!] Theraputic actions")
             print("Theraputic actions are actions that help you recover from trauma.")
@@ -708,7 +606,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
             print("But why? They have only been kind..")
             time.sleep(5)
             print("They grab the IV Drip tangled around your sleeve and carefully take it off")
-            trauma1r(trauma)
+            Melancholy.trauma1r(trauma)
             time.sleep(3)
             print("They look at you with a smile and say 'There we go!~'")
             time.sleep(2)
@@ -752,7 +650,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
                 print("I think they just want to help..")
                 time.sleep(2)
                 print("That's a nice thought.")
-                trauma1r(trauma)
+                Melancholy.trauma1r(trauma)
                 time.sleep(5)
                 IVStamCheckFailMerge(trauma, health, stamina, progress, panicked)
             elif "Don't" in LocklinTrustinp:
@@ -761,7 +659,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
                 print("I can't let my guard down, I need to be careful.")
                 time.sleep(2)
                 print("They seem too nice.")
-                trauma1(trauma)
+                Melancholy.trauma1(trauma)
                 time.sleep(3)
                 IVStamCheckFailMerge(trauma, stamina, health, progress, panicked)
 
@@ -825,13 +723,13 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
         print("'Well, that's alright. We can determine it with the help of modern technology.' She says")
         time.sleep(4)
         print("'Your Injuries were quite extensive.'")
-        trauma1(trauma)
+        Melancholy.trauma1(trauma)
         time.sleep(2)
         print("'Now now, Don't worry about that. You're safe now. I wont let anyone hurt you.'")
         time.sleep(4)
         print("Their voice is soothing, You feel better.")
         time.sleep(1)
-        trauma3r(trauma)
+        Melancholy.trauma3r(trauma)
         print("")
         print("[!] Theraputic actions")
         print("Theraputic actions are actions that help you recover from trauma.")
@@ -854,7 +752,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
         print("But why? They have only been kind..")
         time.sleep(5)
         print("They grab the IV Drip tangled around your sleeve and carefully take it off")
-        trauma1r(trauma)
+        Melancholy.trauma1r(trauma)
         time.sleep(3)
         print("They look at you with a smile and say 'There we go!~'")
         time.sleep(2)
@@ -898,7 +796,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
             print("I think they just want to help..")
             time.sleep(2)
             print("That's a nice thought.")
-            trauma1r(trauma)
+            Melancholy.trauma1r(trauma)
             time.sleep(5)
             IVStamCheckFailMerge(trauma, health, stamina, progress, panicked)
         elif "Don't" in LocklinTrustinp:
@@ -907,7 +805,7 @@ def IVStamCheckFail(trauma, health, stamina, progress, panicked):
             print("Why though? They've done nothing to deserve my mistrust")
             time.sleep(2)
             print("They seem so nice as well...")
-            trauma1(trauma)
+            Melancholy.trauma1(trauma)
             time.sleep(3)
             IVStamCheckFailMerge(trauma, stamina, health, progress, panicked)
 
@@ -922,4 +820,4 @@ if progress == 0:
 if progress == 0.1:
     Chapter1_1(trauma, stamina, progress, health)
 
-endmsg()
+Melancholy.endmsg()
