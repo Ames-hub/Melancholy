@@ -1,0 +1,16 @@
+{
+    "old_home": {
+        "name": "Old Home",
+        "description": "Happy days, Happy memories <3",
+        "sub_location": {
+            "dining_room": {
+                "name": "Dining Room",
+                "description": "Our warm dining room!"
+            }
+        }
+    },
+    "the_incident": {
+        "name": "The day everything changed...",
+        "description": "..."
+    }
+}
