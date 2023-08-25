@@ -89,9 +89,9 @@ class chapter: # Can always "import as" for renaming
                         colour="cyan"
                         )
                     sleep(5)
-                    pr.partial_solid(
+                    pr.solid_colour(
                         "I peer around the corner...",
-                        colour="cyan"
+                        colour="cyan",
                         )
                     sleep(3)
                     pr.delay(
@@ -110,7 +110,7 @@ class chapter: # Can always "import as" for renaming
                         )
                     sleep(5)
                     pr.delay(
-                        text="She says after she does so.. \"Ahg...\" she breathes heavily.. \nDo it for "+get("player.name")+"..\"",
+                        text="She says after she does so.. \"Ahg...\" she breathes heavily..\n\"Do it for "+get("player.name")+".. You can keep going.. until they're strong enough..\"",
                         delay=0.2, colour="cyan"
                         )
                     sleep(5)
