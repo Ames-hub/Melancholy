@@ -78,14 +78,48 @@ class chapter: # Can always "import as" for renaming
                         print_faster=("I.. should stop now..", 0.1),
                         delay=0.23
                         )
-                    sleep(3)
-                    pr.partial_solid(
-                        "\nI stop.. wait for a moment and turn around, Its not right.. they trust me to not go down there.. I wont!",
-                        targets=["I wont!"],
-                        target_colours=["red"],
-                        default_colour="green"
+                    sleep(6)
+                    pr.solid_colour(
+                        "\nI go down the staircase... My heart pounding..",
+                        colour="cyan"
                         )
-                    await_choice(pr.colours["red"]+"I walk back to the hallway...")
+                    sleep(6)
+                    pr.solid_colour(
+                        "And suddenly.. I hear a voice.. Its my mum's? but.. she's in her room?",
+                        colour="cyan"
+                        )
+                    sleep(5)
+                    pr.partial_solid(
+                        "I peer around the corner...",
+                        colour="cyan"
+                        )
+                    sleep(3)
+                    pr.delay(
+                        text="I see my mum, standing in the newly found room of the basement, with her back towards me..",
+                        delay=0.05, colour="cyan"
+                        )
+                    sleep(5)
+                    pr.delay(
+                        text="She's holding pills.. and a bottle of water.. What are they for?",
+                        delay=0.1, colour="cyan"
+                        )
+                    sleep(5)
+                    pr.delay(
+                        text="She swallows 3 pills, and puts the bottle down..",
+                        delay=0.05, colour="cyan"
+                        )
+                    sleep(5)
+                    pr.delay(
+                        text="She says after she does so.. \"Ahg...\" she breathes heavily.. \nDo it for "+get("player.name")+"..\"",
+                        delay=0.2, colour="cyan"
+                        )
+                    sleep(5)
+                    pr.delay(
+                        text="The pills. they look like.. Antidepressants?",
+                        delay=0.05, colour="cyan"
+                        )
+
+                    await_choice(pr.colours["red"]+"This is wrong.. I leave, walking back to the hallway...")
                 else:
                     pr.partial_solid(
                         text="I've already been to the stairs.. I wont go back there.",
