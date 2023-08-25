@@ -207,7 +207,7 @@ class chapter: # Can always "import as" for renaming
                     )
                     sleep(5)
                     pr.solid_colour(
-                        "Her love, Her warmth... Sometimes I forget how much She care about me...",
+                        "Her love, Her warmth... Sometimes I forget how much she cares about me...",
                         colour="cyan"
                     )
                     if gone_to_stairs == True:
@@ -779,7 +779,7 @@ class chapter: # Can always "import as" for renaming
         await_choice("")
         clear_console()
         pr.delay(
-            text=incident_text+"Your mum looks around corner, she says \""+get("player.name")+" Lets go! Its.. l-like a game!\"\n She says, terrified.. What's happening??",
+            text=incident_text+"My mum looks around the corner, she says \""+get("player.name")+" Lets go! Its.. l-like a game!\"\n She says, terrified.. What's happening??",
             delay=0.1, colour="cyan"
         )
         await_choice("")
