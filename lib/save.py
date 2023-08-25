@@ -11,6 +11,16 @@ save_file_dt = {
             "items": {}
         }
     },
+    "endings": {
+        "c0": {
+            "p0": {
+                "went_to_basement": False,
+            },
+            "p2": {
+                "object_choice": False,
+            },
+        }
+    }
 }
 
 class load():

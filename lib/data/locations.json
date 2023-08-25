@@ -1,7 +1,7 @@
 {
     "old_home": {
         "name": "Old Home",
-        "description": "Happy days, Happy memories <3",
+        "description": "Happy days are earliest <3",
         "sub_location": {
             "dining_room": {
                 "name": "Dining Room",
@@ -11,6 +11,6 @@
     },
     "the_incident": {
         "name": "The day everything changed...",
-        "description": "..."
+        "description": "NONONONONONONONONONONONONONONONONONONONONONONONONONO"
     }
 }

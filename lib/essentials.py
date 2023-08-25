@@ -20,6 +20,19 @@ def save_data(key, value):
         dt=save_file_dt
     )
 
+def add_data(key, value, file="save"):
+    if "save" in file:
+        file_dir = save_dir
+    
+    jmod.addvalue(
+        key=key,
+        json_dir=file_dir,
+        value=value,
+        dt=save_file_dt
+    )
+
+
+
 def sleep(duration: float=3):
     '''Sleeps for a specified duration. Duration must be a float or int'''
     assert type(float(duration)) is float
@@ -27,6 +40,8 @@ def sleep(duration: float=3):
         time.sleep(duration)
     except:
         return "SKIPPED" # Allows for skipping of sleep
+
+def clear_console(): os.system('cls' if os.name == 'nt' else 'clear')
 
 def await_choice(question, string="> ", print_faster=("", 0), delay=0, lower=True):
     '''
