@@ -1,6 +1,6 @@
 from ..printing import printing as pr
 from ..save import get
-from ..essentials import sleep, await_choice, log
+from ..essentials import sleep, await_choice, log, locget
 pr = pr(default_colour="cyan")
 
 class chapter: # Can always "import as" for renaming
@@ -14,24 +14,30 @@ class chapter: # Can always "import as" for renaming
     def p1(): 
         pr.solid_color("The world stirs awake.. Your eye's flutter as you wake up")
         sleep()
-        pr.solid_color("You look around your room, messy, littered with toys..\nA Surreal and cheerful fealing washes over you!")
+        pr.solid_color("You look around your room, messy, littered with toys..\nA Surreal and cheerful feeling washes over you!")
         sleep(5)
         pr.solid_color("You jump out of bed! Giggling as the new day starts to unfold!")
         sleep()
+        pr.solid_color(
+            text="You run to the door, and open it!",
+            color="cyan"
+        )    
+        input(pr.colours["green"]+"Press enter to continue...")
+        
         text = (
-            "You run to the door, and open it!\n"
-            f"{pr.colors['green']} ! Notice ! Option hints are shown here\n\n"
+            f"{pr.colours['green']} ! Notice ! Option hints are shown here\n\n"
             "(1: door) It reveals a long hallway with a door to the side, that's my mums room!\n"
             "(2: stairs) It also reveals a staircase at the end... They don't want me going down there..."
         )
         
         global looped_once
         looped_once = False # This becomes True if the player has gone to the stairs or the door and not both
-        global dining_room_available
-        dining_room_available = False
+        global dinning_room_available
+        dinning_room_available = False
+        dinning_room_activated = False
         gone_to_doorway = False
         gone_to_stairs = False
-        while not (gone_to_stairs and gone_to_doorway): # Starts a "Choose both ways" loop
+        while not (gone_to_stairs and gone_to_doorway and dinning_room_activated): # Starts a "Choose both ways" loop
             if gone_to_stairs == True and gone_to_doorway == True:
                 break
             
@@ -51,7 +57,7 @@ class chapter: # Can always "import as" for renaming
                         target_color="red",
                         default_color="green"
                         )
-                    await_choice(pr.colors["red"]+"I walk back to the door way...")
+                    await_choice(pr.colours["red"]+"I walk back to the door way...")
                 else:
                     pr.partial_solid(
                         text="I've already been to the stairs.. I wont go back there.",
@@ -60,7 +66,7 @@ class chapter: # Can always "import as" for renaming
                         default_color="green"
                     )
 
-            if dining_room_available == True:
+            if dinning_room_available == True:
                 pr.color_text(
                     "(1: door) It reveals a long hallway with a door to the side, that's my mums room!\n"
                     "(2: stairs) It also reveals a staircase at the end... They don't want me going down there..."
@@ -79,7 +85,7 @@ class chapter: # Can always "import as" for renaming
                     "(1: door) It reveals a long hallway with a door to the side, that's my mum's room!\n"
                     "(2: stairs) It also reveals a staircase at the end... I refuse to go there!"
                 )
-                if dining_room_available == True:
+                if dinning_room_available == True:
                     text = (
                         text+"\n(3: dinning room) I should go to the dinning room! But only if thats the last thing I wanna do here."
                     )
@@ -88,22 +94,23 @@ class chapter: # Can always "import as" for renaming
                     "(1: door) It reveals a long hallway with a door to the side, that's my mum's room! They seem happy at the moment :)\n"
                     "(2: stairs) It also reveals a staircase at the end... They don't want me going down there..."
                 )
-                if dining_room_available == True:
+                if dinning_room_available == True:
                     text = (
                         text+"\n(3: dinning room) I should go to the dinning room! But only if thats the last thing I wanna do here."
                     )
-            pr.solid_color(text)
-            choice = await_choice(pr.colors["cyan"]+"Where do you go?", delay=0.05)
+            pr.solid_color(
+                f'{locget("old_home.name")}\n{locget("old_home.description")}'+text)
+            choice = await_choice(pr.colours["cyan"]+"Where do you go?", delay=0.05)
             
             # Handles Stair choice
             if gone_to_stairs == False:
-                if choice == "stairs" or choice == "2":
+                if "stairs" in choice or choice == "2":
                     stairs()
                     gone_to_stairs = True
                     looped_once = True
                     continue
             elif gone_to_stairs == True:
-                if choice == "stairs" or choice == "2":
+                if "stairs" in choice or choice == "2":
                     stairs(True)
                     continue
             
@@ -116,7 +123,7 @@ class chapter: # Can always "import as" for renaming
                         color="cyan"
                     )
                     sleep(3)
-                    pr.delay(pr.colors["cyan"]+"Taking a step forward, I open the door to my mum's room.", delay=0.09)
+                    pr.delay(pr.colours["cyan"]+"Taking a step forward, I open the door to my mum's room.", delay=0.09)
                     sleep(3)
                     pr.partial_solid(
                         "\nThe room is filled with their comforting presence!\nMy mum sit on the bed of her cozy room, facing away from me\nMy mum giggles to herself.. I wonder why?\n",
@@ -145,7 +152,7 @@ class chapter: # Can always "import as" for renaming
                     )
                     sleep(5)
                     pr.partial_solid(
-                        "She lets me go, and says softly \"I'll be out in a second "+get("player.name")+", wait for me in the dinning room, will you?\"",
+                        "She lets me go, and says softly \"I'll be out in a second "+get("player.name")+", wait for me in the dinning room, will you?\nI have a surprise for you!\"",
                         target="wait for me in the dinning room, will you?",
                         target_color="yellow",
                         default_color="cyan"
@@ -156,22 +163,22 @@ class chapter: # Can always "import as" for renaming
                     )
                 else:
                     pr.partial_solid(
-                        text="They'll be out in a moment~ I wont bother them! ... For a minute!\nIn the meanwhile, I should go to the dinning room\n"+
-                        pr.colors["green"]+"\nNew option available! (3: dinning room)",
+                        text="She'll be out in a moment~ I wont bother her! ... For a minute!\nIn the meanwhile, I should go to the dinning room\n"+
+                        pr.colours["green"]+"\nNew option available! (3: dinning room)",
                         target="... For a minute!",
                         target_color="red",
                         default_color="cyan"
                     )
-                    global dining_room_available
-                    dining_room_available = True
+                    global dinning_room_available
+                    dinning_room_available = True
 
             # Handles Doorway choice
             if gone_to_doorway == False:
-                if "door" in choice or "doorway" in choice or choice == "1":
+                if "door" in choice or choice == "1":
                     doorway()
                     pr.partial_solid(
-                        text="They'll be out in a moment~ I wont bother them! ... For a minute!\nIn the meanwhile, I should go to the dinning room\n"+
-                        pr.colors["green"]+"\nNew option available! (3: dinning room)",
+                        text="She'll be out in a moment~ I wont bother them! ... For a minute!\nIn the meanwhile, I should go to the dinning room\n"+
+                        pr.colours["green"]+"\nNew option available! (3: dinning room)",
                         target="... For a minute!",
                         target_color="red",
                         default_color="cyan"
@@ -180,6 +187,46 @@ class chapter: # Can always "import as" for renaming
                     looped_once = True
                     continue
             elif gone_to_doorway == True:
-                if choice == "door" or choice == "1":
+                if "door" in choice or choice == "1":
                     doorway(True)
                     continue
+
+            if dinning_room_available == True:
+                if "dinning" in choice or choice == "3":
+                    dinning_room_activated = True
+                    break # Break here to start handling the dinning room choice
+
+        # This loop only stops when both the stairs and the door have been visited AND the dinning room has been "gone to"
+        # Therefore, we handle the dinning room choice here
+        def dinning_room_event(activated=False):
+            pr.delay(
+               text="I walk to the dinning room, and sit down at the table, and wait for mum to come out of her room.",
+               delay=0.05,
+               color="cyan",
+            )
+            sleep(8)
+            pr.delay(
+                text="...",
+                delay=3,
+                color="cyan"
+            )
+            sleep(5)
+            pr.delay(
+                text="You put your head on the table and say to yourself, boredly,\nThis is taking too longgg~ what can I do to pass the time..",
+                delay=0.05,
+                color="cyan"
+            )
+            sleep()
+            pr.partial_solid(
+                text="""
+                You look around the room, and you see..\n
+                A Computer, not very powerful.. but it runs Melancholy\n
+                A Bookshelf, filled with books, some of which mum has read to you.\n
+                A Window, with a view of the outside world, and the sun shining through. Its a warm and sunny day!\n
+                """,
+                target="A Computer A Bookshelf A Window",
+            )
+
+
+        if dinning_room_activated == True:
+            dinning_room_event(True)

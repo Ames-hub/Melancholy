@@ -20,7 +20,7 @@ class printing():
         else:
             self.default_colour = 'cyan'
         
-        self.colors = {
+        self.colours = {
             'reset': '\033[0m',
             'black': '\033[30m',
             'red': '\033[31m',
@@ -36,8 +36,8 @@ class printing():
         if color == None:
             color = self.default_colour
 
-        if color in self.colors:
-            return f"{self.colors[color]}{text}{self.colors['reset']}"
+        if color in self.colours:
+            return f"{self.colours[color]}{text}{self.colours['reset']}"
         else:
             return text
 

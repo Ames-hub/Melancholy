@@ -1,6 +1,6 @@
 # DEFINES GAME-WIDE VARIABLES
 name_of_game = "Melancholy"
-save_dir = "data/save.json"
+save_dir = "lib/data/save.json"
 standardized_strftime = "%Y.%m.%d_%H-%M-%S"
 
 import os, logging, time
@@ -10,6 +10,15 @@ logs_dir = 'lib/data/logs'
 os.makedirs(logs_dir, exist_ok=True)
 
 from lib.save import *
+
+def save_data(key, value):
+    '''Save a specific variable into the save file'''
+    jmod.setvalue(
+        key=key,
+        json_dir=save_dir,
+        value=value,
+        dt=save_file_dt
+    )
 
 def sleep(duration: float=3):
     '''Sleeps for a specified duration. Duration must be a float or int'''

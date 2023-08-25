@@ -20,6 +20,10 @@ class load():
 def get(key):
     return jmod.getvalue(key, "lib/data/save.json", dt=save_file_dt, default=None)
 
+def locget(key):
+    '''Get a variable from the locations.json file'''
+    return jmod.getvalue(key, "lib/data/locations.json", default=None)
+
 class save():
     def __init__(self) -> None:
         self.load = load()
@@ -43,3 +47,10 @@ class save():
             return True
         else:
             return False
+        
+    def erase():
+        try:
+            os.remove("lib/data/save.json")
+        except:
+            return False
+        return True
