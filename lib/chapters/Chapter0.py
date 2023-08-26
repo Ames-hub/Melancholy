@@ -785,12 +785,6 @@ class chapter: # Can always "import as" for renaming
         await_choice("")
         clear_console()
         pr.delay(
-            text=incident_text+"You run with her, and you hear more loud sounds.. and more people fall to the ground..",
-            delay=0.1, colour="cyan"
-        )
-        await_choice("")
-        clear_console()
-        pr.delay(
             text=incident_text+"You run with her, and you hear more loud sounds.. and more people fall to the ground..\nSuddenly...",
             print_faster=("Suddenly...", 0.3), delay=0.1, colour="cyan"
         )
